@@ -9,6 +9,9 @@ export default class GameFieldComponent extends Component {
   @tracked playing = true;
   @tracked victoryText = "";
   @tracked turn = 0;
+  @tracked scoreX = 0;
+  @tracked scoreO = 0;
+  @tracked totalDraws = 0;
 
   @action clickCell(index) {
     if(this.gameState[index] === "" && this.playing) {
@@ -18,8 +21,15 @@ export default class GameFieldComponent extends Component {
       if(this.checkWinner()){
         this.playing = false;
         this.victoryText = "Congratulations " + this.currentPlayer;
+        if (this.currentPlayer === "O") {
+          this.scoreO = this.scoreO + 1;
+        } else {
+          this.scoreX = this.scoreX + 1;
+        }
+        return;
       } else if(this.turn === 9) {
         this.playing = false;
+        this.totalDraws = this.totalDraws + 1;
         this.victoryText = "Draw game";
       } else {
         this.switchPlayer();

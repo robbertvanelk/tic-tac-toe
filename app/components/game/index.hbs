@@ -1,4 +1,9 @@
 <div class="mdc-layout-grid__inner">
+  <Game::Player @wins={{this.scoreX}} @player="X" @current={{this.currentPlayer}}/>
+  <Game::Player @wins={{this.scoreO}} @player="O" @current={{this.currentPlayer}}/>
+  <div>Draws: {{this.totalDraws}}</div>
+</div>
+<div class="mdc-layout-grid__inner">
   <div class="game-field">
     {{#each this.gameState as |field index|}}
       <Game::Field @value={{field}}
