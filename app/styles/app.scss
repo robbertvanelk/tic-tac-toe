@@ -1,0 +1,17 @@
+.game-field {
+  display: flex;
+  flex-wrap: wrap;
+  width: 500px;
+  height: 500px;
+  margin-bottom: 40px;
+}
+
+.field {
+  border: 1px black solid;
+  width: calc(33% - 1px);
+  height: calc(33%);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 40px;
+}
