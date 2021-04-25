@@ -1,7 +1,8 @@
 <div class="mdc-layout-grid__inner">
   <div class="game-field">
-    {{#each this.gameState as |field|}}
-      <Game::Field/>
+    {{#each this.gameState as |field index|}}
+      <Game::Field @value={{field}}
+                   @onClick={{fn this.clickCell index}}/>
     {{/each}}
   </div>
 </div>
