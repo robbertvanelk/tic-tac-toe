@@ -36,6 +36,13 @@ export default class GameFieldComponent extends Component {
     }
   }
 
+  @action newGame() {
+    this.gameState = ["", "", "", "", "", "", "", "", ""];
+    this.currentPlayer = "X";
+    this.turn = 0;
+    this.playing = true;
+  }
+
   @action checkWinner() {
     let state = this.gameState;
     let current = this.currentPlayer;

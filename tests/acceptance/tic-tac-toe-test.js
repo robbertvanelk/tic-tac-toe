@@ -69,4 +69,16 @@ module('Acceptance | tic tac toe', function(hooks) {
 
     assert.dom('label').hasText('Draw game');
   });
+
+  test('Start a new game', async function(assert) {
+    await visit('/');
+
+    await click('.field:nth-child(5)');
+    assert.dom('.field:nth-child(5)').hasText('X');
+    await click('.field:nth-child(9)');
+    assert.dom('.field:nth-child(9)').hasText('O');
+
+    await click('.mdc-button:nth-child(1)');
+    assert.dom('.field:nth-child(5)').hasText('');
+  });
 });
