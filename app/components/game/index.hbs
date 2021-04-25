@@ -6,3 +6,8 @@
     {{/each}}
   </div>
 </div>
+{{#unless this.playing}}
+  <div class="mdc-layout-grid__inner">
+    <label>{{this.victoryText}}</label>
+  </div>
+{{/unless}}
