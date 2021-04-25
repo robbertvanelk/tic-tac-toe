@@ -55,6 +55,12 @@ export default class GameFieldComponent extends Component {
     this.winnerFields = [];
   }
 
+  @action resetScores() {
+    this.scoreO = 0;
+    this.scoreX = 0;
+    this.totalDraws = 0;
+  }
+
   @action checkWinner() {
     let state = this.gameState;
     let current = this.currentPlayer;
