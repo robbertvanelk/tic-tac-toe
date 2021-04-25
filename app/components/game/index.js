@@ -12,6 +12,7 @@ export default class GameFieldComponent extends Component {
   @tracked scoreX = 0;
   @tracked scoreO = 0;
   @tracked totalDraws = 0;
+  @tracked winnerFields = [];
 
   @action clickCell(index) {
     if(this.gameState[index] === "" && this.playing) {
@@ -51,21 +52,25 @@ export default class GameFieldComponent extends Component {
     this.currentPlayer = "X";
     this.turn = 0;
     this.playing = true;
+    this.winnerFields = [];
   }
 
   @action checkWinner() {
     let state = this.gameState;
     let current = this.currentPlayer;
     let match = false;
+    let winnerFields = this.winnerFields
     winningCombinations.forEach(function(element) {
       let arr = element.every(function(num) {
         return state[num] === current;
       })
       if(arr) {
         match = true;
+        winnerFields = element
         return;
       }
     })
+    this.winnerFields = winnerFields;
     return match;
   }
 }

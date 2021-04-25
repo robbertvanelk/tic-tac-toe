@@ -7,6 +7,8 @@
   <div class="game-field">
     {{#each this.gameState as |field index|}}
       <Game::Field @value={{field}}
+                   @index={{index}}
+                   @winnerFields={{this.winnerFields}}
                    @onClick={{fn this.clickCell index}}/>
     {{/each}}
   </div>

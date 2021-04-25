@@ -1,3 +1,3 @@
-<div {{on "click" @onClick}} class="field">
+<div {{on "click" @onClick}} class={{if this.winnerField "winner field" "field"}}>
   {{@value}}
 </div>
