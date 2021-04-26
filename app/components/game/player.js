@@ -1,8 +1,13 @@
-import Component from '@glimmer/component';
+export default class Player {
+  constructor(symbol, current) {
+    this.symbol = symbol;
+    this.wins = 0;
+  }
+  addWin() {
+    this.wins = this.wins + 1;
+  }
 
-export default class PlayerComponent extends Component {
-  get current() {
-    let { current, player } = this.args;
-    return current === player;
+  resetWins() {
+    this.wins = 0;
   }
 }

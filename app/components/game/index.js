@@ -2,31 +2,29 @@ import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 import { winningCombinations } from '../../utils/constants';
+import Player from './player';
 
 export default class GameFieldComponent extends Component {
   @tracked gameState = ["", "", "", "", "", "", "", "", ""];
-  @tracked currentPlayer = "X";
   @tracked playing = true;
   @tracked victoryText = "";
   @tracked turn = 0;
-  @tracked scoreX = 0;
-  @tracked scoreO = 0;
   @tracked totalDraws = 0;
   @tracked winnerFields = [];
+  @tracked playerOne = new Player("X")
+  @tracked playerTwo = new Player("O")
+  @tracked currentPlayer = this.playerOne;
 
   @action clickCell(index) {
     if(this.gameState[index] === "" && this.playing) {
-      this.gameState[index] = this.currentPlayer;
+      this.gameState[index] = this.currentPlayer.symbol;
       this.gameState = this.gameState;
       this.turn = this.turn + 1
       if(this.checkWinner()){
         this.playing = false;
-        this.victoryText = "Congratulations " + this.currentPlayer;
-        if (this.currentPlayer === "O") {
-          this.scoreO = this.scoreO + 1;
-        } else {
-          this.scoreX = this.scoreX + 1;
-        }
+        this.victoryText = "Congratulations " + this.currentPlayer.symbol;
+        this.currentPlayer.addWin();
+        this.displayPlayers()
         return;
       } else if(this.turn === 9) {
         this.playing = false;
@@ -35,35 +33,35 @@ export default class GameFieldComponent extends Component {
       } else {
         this.switchPlayer();
       }
-
     }
   }
 
   @action switchPlayer() {
-    if (this.currentPlayer === "O") {
-      this.currentPlayer = "X";
+    if (this.currentPlayer === this.playerOne) {
+      this.currentPlayer = this.playerTwo;
     } else {
-      this.currentPlayer = "O";
+      this.currentPlayer = this.playerOne;
     }
   }
 
   @action newGame() {
     this.gameState = ["", "", "", "", "", "", "", "", ""];
-    this.currentPlayer = "X";
+    this.currentPlayer = this.playerOne;
     this.turn = 0;
     this.playing = true;
     this.winnerFields = [];
   }
 
   @action resetScores() {
-    this.scoreO = 0;
-    this.scoreX = 0;
+    this.playerOne.resetWins();
+    this.playerTwo.resetWins();
     this.totalDraws = 0;
+    this.displayPlayers()
   }
 
   @action checkWinner() {
     let state = this.gameState;
-    let current = this.currentPlayer;
+    let current = this.currentPlayer.symbol;
     let match = false;
     let winnerFields = this.winnerFields
     winningCombinations.forEach(function(element) {
@@ -78,5 +76,10 @@ export default class GameFieldComponent extends Component {
     })
     this.winnerFields = winnerFields;
     return match;
+  }
+
+  @action displayPlayers() {
+    this.playerOne = this.playerOne;
+    this.playerTwo = this.playerTwo;
   }
 }
