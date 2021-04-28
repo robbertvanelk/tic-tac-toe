@@ -1,0 +1,25 @@
+<div class="mdc-layout-grid__inner">
+  <Game::PlayerInfo @player={{this.playerOne}}
+                    @currentPlayer={{this.currentPlayer}}/>
+  <Game::PlayerInfo @player={{this.playerTwo}}
+                    @currentPlayer={{this.currentPlayer}}/>
+  <div class="mdc-card">Draws: {{this.totalDraws}}</div>
+</div>
+
+<div class="mdc-layout-grid__inner">
+  <div class="game-field">
+    {{#each this.gameState as |field index|}}
+      <Game::Field @value={{field}}
+                   @index={{index}}
+                   @winnerFields={{this.winnerFields}}
+                   @onClick={{fn this.clickCell index}}/>
+    {{/each}}
+  </div>
+</div>
+{{#unless this.playing}}
+  <div class="mdc-layout-grid__inner--4">
+    <label>{{this.victoryText}}</label>
+  </div>
+{{/unless}}
+<Atoms::Button @onClick={{fn this.newGame}} @text="New game"/>
+<Atoms::Button @onClick={{fn this.resetScores}} @text="Reset scores"/>
